@@ -3,16 +3,26 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "041c515d-12d0-41db-aaf0-3a9b9077397e"
+    "analytics": "ce6b9b0d-c5d5-4759-b5f3-e68f8ee1d8ef"
   },
   "newProjectRoot": "projects",
   "projects": {
     "JuegoAdivina": {
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -25,24 +35,41 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css"],
-            "outputPath": "dist/JuegoAdivina",
-            "baseHref": "/JuegoAdivina/",
-            "outputMode": "static"    
+            "styles": [
+              "src/styles.css"
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
               "optimization": false,
+              "extractLicenses": false,
               "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+ "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "JuegoAdivina:build:production"
@@ -52,6 +79,10 @@
             }
           },
           "defaultConfiguration": "development"
+
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
         }
       }
     }
