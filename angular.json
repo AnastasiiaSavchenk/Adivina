@@ -27,6 +27,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "/Adivina/",
+            "outputPath": "dist/Adivina",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -39,7 +41,7 @@
               "src/styles.css"
             ],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "outputMode": "static",
             "ssr": {
               "entry": "src/server.ts"
             }
